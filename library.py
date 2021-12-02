@@ -1,5 +1,5 @@
 from getpass import getpass
-import ipaddress
+import ipaddress, macaddress
 
 def get_username():
     """ function """
@@ -19,8 +19,18 @@ def get_host_ip_address():
     """ function """
     while True:
         try:
-            ip_address = ipaddress.ip_address(input('enter in an ipv4 address (x.x.x.x)\n> '))
+            ip_address = ipaddress.ip_address(input('enter in an ipv4 address\n> '))
         except ValueError:
             continue
         else:
             return ip_address
+
+def get_host_mac_address():
+    """ function """
+    while True:
+        try:
+            mac_address = macaddress.MAC(input('enter in a MAC address\n> '))
+        except ValueError:
+            continue
+        else:
+            return mac_address
