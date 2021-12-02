@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """ docstring """
 from library import *
-import httpx
+import httpx, json
 #import ipdb
 
-get_traffic_stats_url_params = {
+get_client_history_url_params = {
     'fields': 'mobility-history/entry'
     }
 
@@ -27,10 +27,12 @@ def main():
     http_host = get_host_ip_address()
     client_mac_address = get_host_mac_address()
     base_url = f"https://{http_host}:443/restconf/data/"
-    get_client_history_url = f"Cisco-IOS-XE-wireless-client-oper:client-oper-data/mm-if-client-history={client_mac_address}"
-    traffic_stats_response = http_get(base_url + get_client_history_url, username, password, get_traffic_stats_url_params)
+    get_traffic_stats_url = f"Cisco-IOS-XE-wireless-client-oper:client-oper-data/traffic-stats={client_mac_address}"
+    traffic_stats_response = http_get(base_url + get_traffic_stats_url, username, password,)
     if str(traffic_stats_response) == "<Response [200 OK]>":
-        print(traffic_stats_response.text)
+        traffic_stats = json.loads(traffic_stats_response.text)['Cisco-IOS-XE-wireless-client-oper:traffic-stats']
+        retry_rate = int(traffic_stats['data-retries']) / int(traffic_stats['pkts-tx'])
+        print("retries: {:.2%}".format(retry_rate))
     elif str(traffic_stats_response) == "<Response [401 Unauthorized]>":
         print("unauthorized")
     elif str(traffic_stats_response) == "<Response [404 Not Found]>":
