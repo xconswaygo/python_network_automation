@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ docstring """
-from getpass import getpass
+from library import *
 import httpx
 #import ipdb
 
@@ -16,20 +16,6 @@ get_access_points_url_params = {
     'fields': 'ip-addr;name;device-detail/static-info/board-data/wtp-enet-mac'
     }
 
-def get_username():
-    """ function """
-    username_input = str(input('enter in username\n> '))
-    while len(str(username_input.strip())) == 0:
-        username_input = str(input('enter in username\n> '))
-    return username_input
-
-def get_password():
-    """ function """
-    password_input = str(getpass('enter in password\n> '))
-    while len(str(password_input)) == 0:
-        password_input = str(getpass('enter in password\n> '))
-    return password_input
-
 def http_get(url, params, username, password):
     """ function """
     with httpx.Client(verify=False) as http_client:
@@ -42,6 +28,7 @@ def main():
     """ function """
     username = get_username()
     password = get_password()
+    http_host = get_host_ip_address()
     response = http_get(get_access_points_url, get_access_points_url_params, username, password)
     print(response)
     #ipdb.set_trace()
