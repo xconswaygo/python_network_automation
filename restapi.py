@@ -34,10 +34,8 @@ def main():
     elif str(traffic_stats_response) == "<Response [401 Unauthorized]>":
         print("unauthorized")
     elif str(traffic_stats_response) == "<Response [404 Not Found]>":
-        print(traffic_stats_response)
         print("no client found")
     else:
-        print(traffic_stats_response)
         print('error')
 
 if __name__ == '__main__':
