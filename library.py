@@ -26,7 +26,7 @@ def get_host_ip_address():
             print('invalid')
             continue
         else:
-            return ip_address
+            return str(ip_address)
 
 def get_host_mac_address():
     """ function """
@@ -37,4 +37,4 @@ def get_host_mac_address():
             print('invalid')
             continue
         else:
-            return mac_address.replace('-', ':')
+            return str(mac_address).replace('-', ':')
