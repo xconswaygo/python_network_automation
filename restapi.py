@@ -4,9 +4,9 @@ from library import *
 import httpx
 #import ipdb
 
-#get_access_points_url_params = {
-#    'fields': 'ip-addr;name;device-detail/static-info/board-data/wtp-enet-mac'
-#    }
+get_traffic_stats_url_params = {
+    'fields': 'speed;most-recent-rssi;most-recent-snr;spatial-stream'
+    }
 
 def http_get(url, username, password, params=''):
     """ function """
@@ -28,11 +28,8 @@ def main():
     client_mac_address = get_host_mac_address()
     base_url = f"https://{http_host}:443/restconf/data/"
     get_traffic_stats_url = f"Cisco-IOS-XE-wireless-client-oper:client-oper-data/traffic-stats={str(client_mac_address).replace('-', ':')}"
-    traffic_stats_response = http_get(base_url + get_traffic_stats_url, username, password)
-    get_client_history_url = f"Cisco-IOS-XE-wireless-client-oper:client-oper-data/mm-if-client-history={str(client_mac_address).replace('-', ':')}"
-    client_history_response = http_get(base_url + get_client_history_url, username, password)
-    print(traffic_stats_response)
-    print(client_history_response)
+    traffic_stats_response = http_get(base_url + get_traffic_stats_url, username, password, get_traffic_stats_url_params)
+    print(traffic_stats_response.text)
     #ipdb.set_trace()
 
 if __name__ == '__main__':
