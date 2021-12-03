@@ -5,7 +5,7 @@ import httpx, json
 #import ipdb
 
 get_client_history_url_params = {
-    'fields': 'mobility-history/entry'
+    'fields': 'data-retries;pkts-tx;most-recent-snr;speed'
     }
 
 def http_get(url, username, password, params=''):

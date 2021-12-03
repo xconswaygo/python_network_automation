@@ -36,7 +36,7 @@ def main():
     url = f"https://{http_host}:443/restconf/data/Cisco-IOS-XE-native:native/interface"
     post_loopback_interface_response = http_post(url, username, password, json.dumps(loopback_interface),)
     print(post_loopback_interface_response)
-    if str(post_loopback_interface_response) == "<Response [201 Create]>":
+    if str(post_loopback_interface_response) == "<Response [201 Created]>":
         print("success")
     elif str(post_loopback_interface_response) == "<Response [401 Unauthorized]>":
         print("unauthorized")
