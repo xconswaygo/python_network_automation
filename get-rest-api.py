@@ -15,9 +15,7 @@ def http_get(url, username, password, params=''):
         'Content-Type': 'application/yang-data+json',
         }
     with httpx.Client(verify=False) as http_client:
-        response = http_client.get(
-            url, headers=headers, params=params, auth=(username, password)
-            )
+        response = http_client.get(url, headers=headers, params=params, auth=(username, password))
         return response
 
 def main():
