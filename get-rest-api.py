@@ -30,7 +30,9 @@ def main():
     if str(traffic_stats_response) == "<Response [200 OK]>":
         traffic_stats = json.loads(traffic_stats_response.text)['Cisco-IOS-XE-wireless-client-oper:traffic-stats']
         retry_rate = int(traffic_stats['data-retries']) / int(traffic_stats['pkts-tx'])
-        print("retries: {:.2%}".format(retry_rate))
+        print("Retries: {:.2%}".format(retry_rate))
+        print(f"Data Rate: {traffic_stats['speed']} Mbps")
+        print(f"SNR: {traffic_stats['most-recent-snr']} dB")
     elif str(traffic_stats_response) == "<Response [401 Unauthorized]>":
         print("unauthorized")
     elif str(traffic_stats_response) == "<Response [404 Not Found]>":
