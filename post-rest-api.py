@@ -4,6 +4,11 @@ from library import *
 import httpx, json
 #import ipdb
 
+headers = {
+    'Accept': 'application/yang-data+json',
+    'Content-Type': 'application/yang-data+json',
+    }
+
 loopback_interface = {
         "Cisco-IOS-XE-native:Loopback": {
             "name": 1000,
@@ -21,39 +26,25 @@ loopback_interface = {
 def menu():
     return str(input("""
 please select option:
-
-[1]  show Loopback1000
-[2]  create interface Loopback1000
-[3]  delete interface Loopback1000
-
+  [1]  show Loopback1000
+  [2]  create interface Loopback1000
+  [3]  delete interface Loopback1000
 > """))
 
 def http_get(url, username, password, params='',):
     """ function """
-    headers = {
-        'Accept': 'application/yang-data+json',
-        'Content-Type': 'application/yang-data+json',
-        }
     with httpx.Client(verify=False) as http_client:
         response = http_client.get(url, headers=headers, params=params, auth=(username, password))
         return response
 
 def http_post(url, username, password, body,):
     """ function """
-    headers = {
-        'Accept': 'application/yang-data+json',
-        'Content-Type': 'application/yang-data+json',
-        }
     with httpx.Client(verify=False) as http_client:
         response = http_client.post(url, headers=headers, data=body, auth=(username, password))
         return response
 
 def http_delete(url, username, password,):
     """ function """
-    headers = {
-        'Accept': 'application/yang-data+json',
-        'Content-Type': 'application/yang-data+json',
-        }
     with httpx.Client(verify=False) as http_client:
         response = http_client.delete(url, headers=headers, auth=(username, password))
         return response
