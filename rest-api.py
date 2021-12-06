@@ -4,23 +4,23 @@ from library import *
 import httpx, json
 #import ipdb
 
-headers = {
-    'Accept': 'application/yang-data+json',
-    'Content-Type': 'application/yang-data+json',
-    }
-
-loopback_interface = {
-        "Cisco-IOS-XE-native:Loopback": {
+interface_config = {
+        f"Cisco-IOS-XE-native:Loopback": {
             "name": 1000,
             "ip": {
                 "address": {
                     "primary": {
-                        "address": "192.168.1.1",
-                        "mask": "255.255.255.0"
+                        "address": None,
+                        "mask": None
                     }
                 }
             }
         }
+    }
+
+headers = {
+    'Accept': 'application/yang-data+json',
+    'Content-Type': 'application/yang-data+json',
     }
 
 def menu():
@@ -30,24 +30,6 @@ please select option:
   [2]  create interface Loopback1000
   [3]  delete interface Loopback1000
 > """))
-
-def http_get(url, username, password, params=''):
-    """ function """
-    with httpx.Client(verify=False) as http_client:
-        response = http_client.get(url, headers=headers, params=params, auth=(username, password))
-        return response
-
-def http_post(url, username, password, body):
-    """ function """
-    with httpx.Client(verify=False) as http_client:
-        response = http_client.post(url, headers=headers, data=body, auth=(username, password))
-        return response
-
-def http_delete(url, username, password):
-    """ function """
-    with httpx.Client(verify=False) as http_client:
-        response = http_client.delete(url, headers=headers, auth=(username, password))
-        return response
 
 def main():
     """ function """
@@ -62,11 +44,12 @@ def main():
             print(get_response)
             print(get_response.text)
         elif user_input == "2":
-            post_response = http_post(url, username, password, json.dumps(loopback_interface))
-            print(post_response)
+            my_addr = get_ip_address_and_mask()
+            interface_config['Cisco-IOS-XE-native:Loopback']['ip']['address']['primary']['address'] = my_addr[0]
+            interface_config['Cisco-IOS-XE-native:Loopback']['ip']['address']['primary']['mask'] = my_addr[1]
+            print(http_post(url, username, password, json.dumps(interface_config)))
         elif user_input == "3":
-            delete_response = http_delete(url + "/Loopback=1000", username, password)
-            print(delete_response)
+            print(http_delete(url + "/Loopback=1000", username, password))
 
 if __name__ == '__main__':
     main()
