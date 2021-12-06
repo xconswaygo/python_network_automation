@@ -31,19 +31,19 @@ please select option:
   [3]  delete interface Loopback1000
 > """))
 
-def http_get(url, username, password, params='',):
+def http_get(url, username, password, params=''):
     """ function """
     with httpx.Client(verify=False) as http_client:
         response = http_client.get(url, headers=headers, params=params, auth=(username, password))
         return response
 
-def http_post(url, username, password, body,):
+def http_post(url, username, password, body):
     """ function """
     with httpx.Client(verify=False) as http_client:
         response = http_client.post(url, headers=headers, data=body, auth=(username, password))
         return response
 
-def http_delete(url, username, password,):
+def http_delete(url, username, password):
     """ function """
     with httpx.Client(verify=False) as http_client:
         response = http_client.delete(url, headers=headers, auth=(username, password))
@@ -62,7 +62,7 @@ def main():
             print(get_response)
             print(get_response.text)
         elif user_input == "2":
-            post_response = http_post(url, username, password, json.dumps(loopback_interface),)
+            post_response = http_post(url, username, password, json.dumps(loopback_interface))
             print(post_response)
         elif user_input == "3":
             delete_response = http_delete(url + "/Loopback=1000", username, password)
