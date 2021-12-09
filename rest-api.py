@@ -1,8 +1,5 @@
-#!/usr/bin/python3
-""" docstring """
 from library import *
-import httpx, json
-#import ipdb
+import json
 
 interface_config = {
         f"Cisco-IOS-XE-native:Loopback": {
@@ -31,7 +28,6 @@ def get_connection_info():
     return connection_info
 
 def main():
-    """ function """
     user_input = get_connection_info()
     url = f"https://{user_input['host']}:443/restconf/data/Cisco-IOS-XE-native:native/interface"
     while True:
