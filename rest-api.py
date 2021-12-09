@@ -23,7 +23,8 @@ headers = {
 def main():
     auth = (get_username(), get_password())
     host = get_host_ip_address()
-    with httpx.Client(verify=False, headers=headers, auth=auth, base_url=f"https://{host}:443/restconf/data/Cisco-IOS-XE-native:native/interface") as http_client:
+    url = f"https://{host}:443/restconf/data/Cisco-IOS-XE-native:native/interface"
+    with httpx.Client(verify=False, headers=headers, auth=auth, base_url=url) as http_client:
         while True:
             menu_input = str(input("please select option:\n  [1]  show Loopback1000\n  [2]  create interface Loopback1000\n  [3]  delete interface Loopback1000\n> "))
             if menu_input == "1":
