@@ -23,14 +23,6 @@ headers = {
     'Content-Type': 'application/yang-data+json',
     }
 
-def menu():
-    return str(input("""
-please select option:
-  [1]  show Loopback1000
-  [2]  create interface Loopback1000
-  [3]  delete interface Loopback1000
-> """))
-
 def get_connection_info():
     connection_info = {}
     connection_info['username'] = get_username()
@@ -43,7 +35,7 @@ def main():
     user_input = get_connection_info()
     url = f"https://{user_input['host']}:443/restconf/data/Cisco-IOS-XE-native:native/interface"
     while True:
-        menu_input = menu()
+        menu_input = str(input("please select option:\n  [1]  show Loopback1000\n  [2]  create interface Loopback1000\n  [3]  delete interface Loopback1000\n> "))
         if menu_input == "1":
             get_response = http_get(url + "/Loopback=1000", user_input['username'], user_input['password'], headers)
             print(get_response)
