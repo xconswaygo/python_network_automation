@@ -40,11 +40,9 @@ def main():
             my_addr = get_ip_address_and_mask()
             interface_config['Cisco-IOS-XE-native:Loopback']['ip']['address']['primary']['address'] = my_addr[0]
             interface_config['Cisco-IOS-XE-native:Loopback']['ip']['address']['primary']['mask'] = my_addr[1]
-            post_response = http_post(url, user_input['username'], user_input['password'], headers, json.dumps(interface_config))
-            print(post_response)
+            print(http_post(url, user_input['username'], user_input['password'], headers, json.dumps(interface_config)))
         elif menu_input == "3":
-            delete_response = http_delete(url + "/Loopback=1000", user_input['username'], user_input['password'], headers)
-            print(delete_response)
+            print(http_delete(url + "/Loopback=1000", user_input['username'], user_input['password'], headers))
 
 if __name__ == '__main__':
     main()
