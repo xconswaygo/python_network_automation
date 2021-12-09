@@ -1,5 +1,5 @@
 from library import *
-import json
+import json, httpx
 
 interface_config = {
         f"Cisco-IOS-XE-native:Loopback": {
@@ -27,7 +27,7 @@ def main():
         while True:
             menu_input = str(input("please select option:\n  [1]  show Loopback1000\n  [2]  create interface Loopback1000\n  [3]  delete interface Loopback1000\n> "))
             if menu_input == "1":
-                get_response = http_client.get('/Loopback=1000',)
+                get_response = http_client.get(url='/Loopback=1000',)
                 print(get_response)
                 print(get_response.text)
             elif menu_input == "2":
@@ -37,7 +37,7 @@ def main():
                 data = json.dumps(interface_config)
                 print(http_client.post(url='', data=data))
             elif menu_input == "3":
-                print(http_client.delete('/Loopback=1000',))
+                print(http_client.delete(url='/Loopback=1000',))
 
 if __name__ == '__main__':
     main()

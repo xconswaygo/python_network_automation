@@ -1,5 +1,5 @@
 from getpass import getpass
-import ipaddress, macaddress, httpx
+import ipaddress, macaddress
 
 
 def get_username():
@@ -49,23 +49,3 @@ def get_host_mac_address():
             continue
         else:
             return str(mac_address).replace('-', ':')
-
-
-def http_get(url, params=None, auth=None, headers=None,):
-    with httpx.Client(verify=False) as i:
-        return i.get(url, headers=headers, auth=(auth[0], auth[1]), params=params,)
-
-
-def http_patch(url, params=None, auth=None, headers=None, body=None,):
-    with httpx.Client(verify=False) as i:
-        return i.patch(url, headers=headers, auth=(auth[0], auth[1]), data=body, params=params,)
-
-
-def http_post(url, params=None, auth=None, headers=None, body=None,):
-    with httpx.Client(verify=False) as i:
-        return i.post(url, headers=headers, auth=(auth[0], auth[1]), data=body, params=params,)
-
-
-def http_delete(url, params=None, auth=None, headers=None,):
-    with httpx.Client(verify=False) as i:
-        return i.delete(url, headers=headers, auth=(auth[0], auth[1]), params=params,)
